@@ -10,5 +10,18 @@
     {% endif %}
     to <code>{{json.msg.branch}}</code> branch of <strong>{{json.msg.project_fullname}}</strong>
     <br/>
-    </a>
+    </a>.
+    The commit(s) changed {{json.msg.changed_files}}
+    {% if len(json.msg.changed_files) < 1 %}
+    NO files.
+    {% elif len(json.msg.changed_files) > 4 %}
+    {% len(json.msg.changed_files) %} files (too many to show).
+    {% else %}
+    {% len(json.msg.changed_files) %} files:<ul>
+    {% for fname in sorted(json.msg.changed_files.keys()) %}
+    <li>{{ fname }} - {{ json.msg.changed_files[fname] }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+
 </p>
